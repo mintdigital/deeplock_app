@@ -7,6 +7,9 @@ aws s3 cp s3://deeplock-app-$DEPLOYMENT_GROUP_NAME-secrets/creds.txt --region eu
 eval $(cat creds.txt | sed 's/^/export /')
 rm creds.txt
 
+MIX_ENV=prod
+VERSION=$(grep version mix.exs | sed 's/^.*version: "//' | sed 's/",//')
+
 mix local.hex --force
 mix local.rebar --force
 mix deps.get
@@ -17,9 +20,6 @@ mix release --env=prod
 echo $?
 mkdir -p /var/app/current
 chown owner /var/app/current
-
-VERSION=$(grep version mix.exs | sed 's/^.*version: "//' | sed 's/",//')
-
 cp _build/prod/rel/deeplock_app/releases/$VERSION/deeplock_app.tar.gz /var/app/current/deeplock_app.tar.gz
 cd /var/app/current
 tar -xzf deeplock_app.tar.gz
