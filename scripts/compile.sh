@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
+cd /opt/codedeploy-agent/deployment-root/$DEPLOYMENT_GROUP_ID/$DEPLOYMENT_ID/deployment-archive
+
 SECRETS_S3_BUCKET=deeplock-app-production-secrets
 VERSION=$(grep version mix.exs | sed 's/^.*version: "//' | sed 's/",//')
-
-cd /opt/codedeploy-agent/deployment-root/$DEPLOYMENT_GROUP_ID/$DEPLOYMENT_ID/deployment-archive
 
 # Load the S3 secrets file contents into the environment variables
 aws s3 cp s3://$SECRETS_S3_BUCKET/creds.txt --region eu-west-1 creds.txt
