@@ -95,7 +95,7 @@ hooks:
 #   in the script specified in "location".
   AfterInstall:
     - location: scripts/compile.sh
-      runas: owner
+      runas: root
 # During the ApplicationInstall deployment lifecycle event, run the commands 
 #   in the script specified in "location".
   ApplicationStart:
