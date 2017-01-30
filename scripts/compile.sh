@@ -17,7 +17,10 @@ mix release --env=prod
 echo $?
 mkdir -p /var/app/current
 chown owner /var/app/current
-cp _build/prod/rel/deeplock_app/releases/0.1.0/deeplock_app.tar.gz /var/app/current/deeplock_app.tar.gz
+
+VERSION=$(mix run -e ":application.get_key(:deeplock_app, :vsn) |> elem(1) |> IO.puts")
+
+cp _build/prod/rel/deeplock_app/releases/$VERSION/deeplock_app.tar.gz /var/app/current/deeplock_app.tar.gz
 cd /var/app/current
 tar -xzf deeplock_app.tar.gz
 chown -R owner ./*
