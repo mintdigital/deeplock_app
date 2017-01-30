@@ -7,7 +7,6 @@ aws s3 cp s3://deeplock-app-$DEPLOYMENT_GROUP_NAME-secrets/creds.txt --region eu
 eval $(cat creds.txt | sed 's/^/export /')
 rm creds.txt
 
-MIX_ENV=prod
 VERSION=$(grep version mix.exs | sed 's/^.*version: "//' | sed 's/",//')
 
 mix local.hex --force
@@ -15,8 +14,8 @@ mix local.rebar --force
 mix deps.get
 npm install
 ./node_modules/brunch/bin/brunch build --production
-mix phoenix.digest
-mix release --env=prod
+MIX_ENV=prod mix phoenix.digest
+MIX_ENV=prod mix release --env=prod
 echo $?
 mkdir -p /var/app/current
 chown owner /var/app/current
