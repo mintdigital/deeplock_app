@@ -18,7 +18,7 @@ echo $?
 mkdir -p /var/app/current
 chown owner /var/app/current
 
-VERSION=$(mix run -e ":application.get_key(:deeplock_app, :vsn) |> elem(1) |> IO.puts")
+VERSION=$(grep version mix.exs | sed 's/^.*version: "//' | sed 's/",//')
 
 cp _build/prod/rel/deeplock_app/releases/$VERSION/deeplock_app.tar.gz /var/app/current/deeplock_app.tar.gz
 cd /var/app/current
