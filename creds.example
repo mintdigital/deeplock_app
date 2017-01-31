@@ -1,2 +1,2 @@
-FOO=secret
-BAR=secret
+SECRET_KEY_BASE=example
+DATABASE_URL=postgres://rds_db_user:rds_db_password@rds_instance_url:port/database_name
