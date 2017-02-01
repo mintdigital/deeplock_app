@@ -3,10 +3,11 @@
 cd /opt/codedeploy-agent/deployment-root/$DEPLOYMENT_GROUP_ID/$DEPLOYMENT_ID/deployment-archive
 
 SECRETS_S3_BUCKET=deeplock-app-production-secrets
+S3_BUCKET_REGION=eu-west-1
 VERSION=$(grep version mix.exs | sed 's/^.*version: "//' | sed 's/",//')
 
 # Load the S3 secrets file contents into the environment variables
-aws s3 cp s3://$SECRETS_S3_BUCKET/creds.txt --region eu-west-1 creds.txt
+aws s3 cp s3://$SECRETS_S3_BUCKET/creds.txt --region $S3_BUCKET_REGION creds.txt
 eval $(cat creds.txt | sed 's/^/export /')
 rm creds.txt
 
