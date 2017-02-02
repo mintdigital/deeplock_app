@@ -5,6 +5,7 @@ cd /opt/codedeploy-agent/deployment-root/$DEPLOYMENT_GROUP_ID/$DEPLOYMENT_ID/dep
 SECRETS_S3_BUCKET=deeplock-app-production-secrets
 S3_BUCKET_REGION=eu-west-1
 VERSION=$(grep version mix.exs | sed 's/^.*version: "//' | sed 's/",//')
+APP_NAME=$(grep app: mix.exs | sed 's/^.*app: ://' | sed 's/,//')
 
 # Load the S3 secrets file contents into the environment variables
 aws s3 cp s3://$SECRETS_S3_BUCKET/creds.txt --region $S3_BUCKET_REGION creds.txt
@@ -21,7 +22,7 @@ MIX_ENV=prod mix release --env=prod
 echo $?
 mkdir -p /var/app/current
 chown owner /var/app/current
-cp _build/prod/rel/deeplock_app/releases/$VERSION/deeplock_app.tar.gz /var/app/current/deeplock_app.tar.gz
+cp _build/prod/rel/$APP_NAME/releases/$VERSION/$APP_NAME.tar.gz /var/app/current/$APP_NAME.tar.gz
 cd /var/app/current
-tar -xzf deeplock_app.tar.gz
+tar -xzf $APP_NAME.tar.gz
 chown -R owner ./*
