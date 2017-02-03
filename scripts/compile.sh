@@ -3,8 +3,8 @@
 cd /opt/codedeploy-agent/deployment-root/$DEPLOYMENT_GROUP_ID/$DEPLOYMENT_ID/deployment-archive
 
 ### Update these values for your own S3 bucket ###
-SECRETS_S3_BUCKET=deeplock-app-production-secrets
-S3_BUCKET_REGION=eu-west-1
+SECRETS_S3_BUCKET=webstackwiths3-secretsbucket-1pk4172chs72h
+S3_BUCKET_REGION=us-east-1
 ### Don't update below this line ###
 
 VERSION=$(grep version mix.exs | sed 's/^.*version: "//' | sed 's/",//')
